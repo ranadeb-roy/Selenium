@@ -12,7 +12,7 @@ driver = webdriver.Edge()
 # Navigate to the Pokemon Database website
 driver.get("https://pokemondb.net/")
 driver.maximize_window()
-print(driver.title)
+print("\n", driver.title, "\n")
 time.sleep(2)
 
 # Navigate to "Pokemon FireRed & LeafGreen" page
@@ -22,16 +22,16 @@ time.sleep(2)
 driver.find_element(By.LINK_TEXT, "FireRed & LeafGreen").click()
 time.sleep(2)
 
-# Switch to the new opened tab
-# wait = WebDriverWait(driver, 30)    # Wait for max 30 seconds
-# wait.until(lambda driver: len(driver.window_handles) > 1)   # Wait until new tab is opened
+# Wait until the page is fully loaded
+wait = WebDriverWait(driver, 30)    # Wait for max 30 seconds
+wait.until(lambda driver: driver.execute_script("return document.readyState") == "complete")
+print(driver.title, "\n")
+time.sleep(2)
 
-main_window = driver.current_window_handle      # Store the current window
-windows = driver.window_handles
-driver.switch_to.window(windows[-1])    # Switch to the new tab
-
-# wait.until(lambda driver: driver.execute_script("return document.readyState") == "complete")    # Wait until the page is fully loaded
-print(driver.title)
+# Navigate to the Pokedex page
+driver.find_element(By.LINK_TEXT, "FireRed & LeafGreen Pokédex").click()
+wait.until(lambda driver: driver.execute_script("return document.readyState") == "complete")
+print(driver.title, "\n")
 time.sleep(2)
 
 driver.quit()
